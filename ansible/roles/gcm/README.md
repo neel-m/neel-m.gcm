@@ -11,7 +11,7 @@ None
 Role Variables
 --------------
 
-`gcm_gcm_gcm_gcm_dot_net_package_name`: dotnet-sdk-7.0
+`gcm_dot_net_package_name`: dotnet-sdk-7.0
 
 `gcm_repo_key_url`: https://packages.microsoft.com/keys/microsoft.asc
 

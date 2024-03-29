@@ -42,7 +42,7 @@
 - name: Install dot net
   become: true
   ansible.builtin.apt:
-    name: "{{ gcm_gcm_dot_net_package_name }}"
+    name: "{{ gcm_dot_net_package_name }}"
 
 - name: Check if git credential manager is installed
   ansible.builtin.set_fact:
