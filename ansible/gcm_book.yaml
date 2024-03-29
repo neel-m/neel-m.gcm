@@ -1,0 +1,7 @@
+---
+- name: Git Credential Manager Install
+  hosts: local
+  become: false
+
+  roles:
+    - gcm

@@ -1,0 +1,4 @@
+[local]
+; if you are running ansible from another machine, replace localhost with
+; the name(s) of the target machine(s)
+localhost ansible_connection=local
