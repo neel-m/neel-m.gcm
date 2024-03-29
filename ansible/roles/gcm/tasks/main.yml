@@ -4,15 +4,16 @@
 - name: Get packages needed for dot net install
   become: true
   ansible.builtin.apt:
-    name: "{{ apt_packages }}"
+    name: "{{ gcm_apt_packages }}"
     state: present
-    update_cache: "{{ update_apt_cache_for_dot_net }}"
+    update_cache: "{{ gcm_update_apt_cache_for_dot_net }}"
   when: ansible_os_family == 'Debian'
 
 # https://learn.microsoft.com/en-us/dotnet/core/install/linux-package-mixup?pivots=os-linux-ubuntu#solutions
 - name: Get package source
-  set_fact:
-    package_source: "{{ lookup('pipe', 'apt-cache policy ''~ndotnet.*'' | grep -v microsoft | grep ''/ubuntu'' | grep updates | cut -d\"/\" -f3 | sort -u') }}"
+  ansible.builtin.set_fact:
+    package_source:
+      "{{ lookup('pipe', 'apt-cache policy ''~ndotnet.*'' | grep -v microsoft | grep ''/ubuntu'' | grep updates | cut -d\"/\" -f3 | sort -u') }}"  # noqa: jinja[spacing] yaml[line-length]
 
 - name: Ensure apt preferences is present
   become: true
@@ -35,21 +36,23 @@
   retries: 3
   delay: 5
   ansible.builtin.apt_key:
-    url: "{{ repo_key_url }}"
+    url: "{{ gcm_repo_key_url }}"
     state: present
 
 - name: Install dot net
   become: true
   ansible.builtin.apt:
-    name: "{{ dot_net_package_name }}"
+    name: "{{ gcm_gcm_dot_net_package_name }}"
 
 - name: Check if git credential manager is installed
-  set_fact:
+  ansible.builtin.set_fact:
     gcm_tool: "{{ lookup('pipe', 'dotnet tool list -g | grep git-credential-manager', errors='ignore') }}"
+  changed_when: gcm_tool != ""
 
 - name: Install GCM
-  shell: dotnet tool install -g git-credential-manager
+  ansible.builtin.command: dotnet tool install -g git-credential-manager
   when: gcm_tool == ""
+  changed_when: gcm_tool == ""
 
 - name: Create command to start dbus
   ansible.builtin.template:

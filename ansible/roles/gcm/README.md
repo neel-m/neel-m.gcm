@@ -11,18 +11,18 @@ None
 Role Variables
 --------------
 
-`dot_net_package_name`: dotnet-sdk-7.0
+`gcm_gcm_gcm_gcm_dot_net_package_name`: dotnet-sdk-7.0
 
-`repo_key_url`: https://packages.microsoft.com/keys/microsoft.asc
+`gcm_repo_key_url`: https://packages.microsoft.com/keys/microsoft.asc
 
-`apt_packages`:
+`gcm_apt_packages`:
   - apt-transport-https
   - curl
   - dbus-user-session
   - gnome-keyring
   - libsecret-tools
 
-`update_apt_cache_for_dot_net`: `false`
+`gcm_update_apt_cache_for_dot_net`: `false`
 
 
 Dependencies
@@ -38,7 +38,7 @@ Including an example of how to use your role (for instance, with variables passe
 ```yaml
 - hosts: servers
   roles:
-      - { role: gcm, update_apt_cache_for_dot_net: yes }
+      - { role: gcm, gcm_update_apt_cache_for_dot_net: yes }
 ```
 
 License
