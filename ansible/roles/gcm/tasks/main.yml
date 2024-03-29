@@ -42,7 +42,7 @@
 - name: Check if git credential manager is installed
   ansible.builtin.set_fact:
     gcm_tool: "{{ lookup('pipe', 'dotnet tool list -g | grep git-credential-manager', errors='ignore') }}"
-  changed_when: gcm_tool != ""
+  changed_when: gcm_tool == ""
 
 - name: Install GCM
   ansible.builtin.command: dotnet tool install -g git-credential-manager
