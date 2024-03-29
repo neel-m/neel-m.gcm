@@ -15,17 +15,12 @@
     package_source:
       "{{ lookup('pipe', 'apt-cache policy ''~ndotnet.*'' | grep -v microsoft | grep ''/ubuntu'' | grep updates | cut -d\"/\" -f3 | sort -u') }}"  # noqa: jinja[spacing] yaml[line-length]
 
-- name: Ensure apt preferences is present
-  become: true
-  ansible.builtin.file:
-    path: /etc/apt/preferences
-    state: touch
-    mode: '0644'  # Use the desired permissions
-
 - name: Make sure to not use the default package store
   become: true
   ansible.builtin.blockinfile:
     path: /etc/apt/preferences
+    create: true
+    mode: '0644'
     block: |
       Package: dotnet* aspnet* netstandard*
       Pin: origin "{{ package_source }}"
