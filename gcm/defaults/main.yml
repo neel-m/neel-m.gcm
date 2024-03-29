@@ -1,0 +1,15 @@
+---
+# defaults file for gcm
+
+dot_net_package_name: dotnet-sdk-7.0
+
+repo_key_url: https://packages.microsoft.com/keys/microsoft.asc
+
+apt_packages:
+  - apt-transport-https
+  - curl
+  - dbus-user-session
+  - gnome-keyring
+  - libsecret-tools
+
+update_apt_cache_for_dot_net: false

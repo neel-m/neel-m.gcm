@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# Prompt the user for the keyring password
+read -s -p "Enter keyring password: " keyring_password
+echo
+
+# Unlock the gnome-keyring-daemon with the provided password
+export $(echo -n "$keyring_password" | gnome-keyring-daemon --unlock)
