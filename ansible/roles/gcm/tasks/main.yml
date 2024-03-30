@@ -1,6 +1,21 @@
 ---
 # tasks file for gcm
 
+
+- name: Add git apt repository
+  become: true
+  ansible.builtin.apt_repository:
+    repo: ppa:git-core/ppa
+    state: present
+    update_cache: true
+
+- name: Get git package
+  become: true
+  ansible.builtin.apt:
+    name: git
+    state: present
+  when: ansible_os_family == 'Debian'
+
 - name: Get packages needed for dot net install
   become: true
   ansible.builtin.apt:

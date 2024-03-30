@@ -22,7 +22,7 @@ echo "------------------------------------------------------------------------"
 
 export PATH=~/.local/bin:$PATH
 sudo apt update
-sudo apt install -y git python3-pip
+sudo apt install -y python3-apt gpg python3-pip
 pip install -U --user ansible
 pip install -U --user jmespath
 # ---------------------------------------------
