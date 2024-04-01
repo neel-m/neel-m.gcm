@@ -1,0 +1,30 @@
+---
+# tasks file for azcli
+
+- name: Get packages needed for azcli install
+  become: true
+  ansible.builtin.apt:
+    name: "{{ azcli_apt_packages }}"
+    state: present
+    update_cache: "{{ azcli_update_apt_cache_for_azcli }}"
+  when: ansible_os_family == 'Debian'
+
+- name: Import Microsoft signing key for apt
+  become: true
+  retries: 3
+  delay: 5
+  ansible.builtin.apt_key:
+    url: "{{ azcli_repo_key_url }}"
+    state: present
+
+- name: Install Azure CLI
+  become: true
+  ansible.builtin.apt:
+    name: "{{ azcli_azure_package_name }}"
+
+- name: Install Azure CLI azcli_extensions
+  become: false
+  ansible.builtin.command:
+    cmd: az extension add --name "{{ item }}"
+    creates: "~/.azure/cliextensions/{{ item }}"
+  loop: "{{ azcli_extensions }}"

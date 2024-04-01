@@ -1,0 +1,17 @@
+---
+# defaults file for azcli
+
+azcli_azure_package_name: azure-cli
+
+azcli_repo_key_url: https://packages.microsoft.com/keys/microsoft.asc
+
+azcli_apt_packages:
+  - aptitude
+  - curl
+  - apt-transport-https
+  - gnupg
+
+azcli_update_apt_cache_for_azcli: false
+
+azcli_extensions:
+  - azure-devops
