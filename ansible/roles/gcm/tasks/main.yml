@@ -75,3 +75,9 @@
     src: ../files/unlock
     dest: ~/.local/bin/unlock
     mode: '0755'
+
+- name: Set GCM Configuration for Azure DevOps
+  community.general.git_config:
+    name: "credential.azreposCredentialType"
+    scope: global
+    value: oauth
