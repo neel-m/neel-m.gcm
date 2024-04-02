@@ -9,7 +9,8 @@ CR="\e[0m"
 # ~/.local/bin
 # ---------------------------------------------
 if [[ ":${PATH}:" != *":${HOME}/.local/bin:"* ]]; then
-    echo "adding ${HOME}/.local/bin to PATH in ~/.bashrc"
+    echo "adding ${HOME}/.local/bin to PATH"
+    export PATH=~/.local/bin:$PATH
 else
     echo "✓ ${HOME}/.local/bin already in path"
 fi
@@ -20,7 +21,6 @@ echo -e "\n\n-------------------------------------------------------------------
 echo "Installing git, python3-pip, and ansible (may require sudo password)"
 echo "------------------------------------------------------------------------"
 
-export PATH=~/.local/bin:$PATH
 sudo apt update
 sudo apt install -y python3-apt gpg python3-pip
 pip install -U --user ansible
@@ -64,8 +64,6 @@ echo "This will take a few minutes."
 echo -e "\n\n${GREEN}Ansible will ask you for your sudo password${CR}"
 echo -e "${GREEN}with the prompt ${YELLOW}'BECOME password:'${CR}"
 echo "------------------------------------------------------------------------"
-echo -e "${YELLOW}Press ENTER to continue..."
-read -p ""
 
 pushd "$HOME/$gcm_dest/ansible" > /dev/null
 ansible-playbook gcm_book.yaml
@@ -74,6 +72,7 @@ popd > /dev/null
 
 if [ "$rc" == "0" ]; then
     echo -e "${GREEN}Your environment is now ready.${CR}"
+    source ~/.bashrc
 else
     echo -e "${RED}Something didn't work with ansible.${CR}"
 fi
