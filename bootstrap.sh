@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Prevent the script from running unless it is sourced
+(return 0 2>/dev/null) || { echo "This script should be sourced, not executed directly"; exit 1; }
+
 GREEN="\e[32m"
 RED="\e[31m"
 YELLOW="\e[1;33m"
@@ -29,7 +32,7 @@ pip install -U --user jmespath
 # Clone neel-m.gcm Repo
 # ---------------------------------------------
 echo -e "\n\n------------------------------------------------------------------------"
-echo "Clone (or check existing) bardev repo -> ~/.neel-m.gcm"
+echo "Clone (or check existing) neel-m.gcm repo -> ~/.neel-m.gcm"
 echo "------------------------------------------------------------------------"
 gcm_dest=.neel-m.gcm
 if [ -d "${HOME}/$gcm_dest" ]; then
