@@ -1,9 +1,6 @@
 Role Name
 =========
 
-> NOTE: this role has been copied from ampx-iac/ansible-roles to make
-setting up a local dev environment simpler.
-
 Install/ensure azcli for Debian machines.
 
 

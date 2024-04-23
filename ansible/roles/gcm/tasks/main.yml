@@ -16,7 +16,7 @@
     state: present
   when: ansible_os_family == 'Debian'
 
-- name: Get packages needed for dot net install
+- name: Get packages needed
   become: true
   ansible.builtin.apt:
     name: "{{ gcm_apt_packages }}"
@@ -64,17 +64,17 @@
   when: gcm_tool == ""
   changed_when: gcm_tool == ""
 
-- name: Create command to start dbus
-  ansible.builtin.template:
-    src: ../files/startdbus
-    dest: ~/.local/bin/startdbus
-    mode: '0755'
+# - name: Create command to start dbus
+#   ansible.builtin.template:
+#     src: ../files/startdbus
+#     dest: ~/.local/bin/startdbus
+#     mode: '0755'
 
-- name: Create command to unlock keyring
-  ansible.builtin.template:
-    src: ../files/unlock
-    dest: ~/.local/bin/unlock
-    mode: '0755'
+# - name: Create command to unlock keyring
+#   ansible.builtin.template:
+#     src: ../files/unlock
+#     dest: ~/.local/bin/unlock
+#     mode: '0755'
 
 - name: Set GCM Configuration for Azure DevOps
   community.general.git_config:
