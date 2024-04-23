@@ -82,11 +82,24 @@
   when: gcm_tool == ""
   changed_when: gcm_tool == ""
 
+- name: Set GCM Configuration for gpg
+  community.general.git_config:
+    name: "credential.credentialStore"
+    scope: global
+    value: gpg
+
 - name: Set GCM Configuration for Azure DevOps
   community.general.git_config:
     name: "credential.azreposCredentialType"
     scope: global
     value: oauth
+
+- name: Get repo tool
+  become: true
+  ansible.builtin.get_url:
+    url: https://storage.googleapis.com/git-repo-downloads/repo
+    mode: "0775"
+    dest: /bin/repo
 
 - name: Configure .bashrc to include ~/.local/bin
   ansible.builtin.blockinfile:
