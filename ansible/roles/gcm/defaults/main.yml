@@ -7,6 +7,7 @@ gcm_repo_key_url: https://packages.microsoft.com/keys/microsoft.asc
 
 gcm_apt_packages:
   - apt-transport-https
+  - dotnet-host-7.0
   - curl
   - pass
 
