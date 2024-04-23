@@ -7,11 +7,10 @@ This repo contains a bootstrap script and process for installing git-credential-
         * Downloads the bootstrap gist for neel-m.gcm (which will install git-credential-manager and azcli plus dependencies)
     1. Run `source gcmboot`
         * Runs the Ansible playbook to install GCM and azcli and helpers
-    1. Run `startdbus`
-        * This helper runs dbus in a new shell (needed by gnome-keyring)
-    1. Run `unlock`
-        * Enter a password or pin (that you can remember)
-        * This unlocks the keyring (the first password/key sets it for all future uses)
+    1. Run `gpg --quick-generate-key gcm`
+        * This will initialize gpg and generate a key for use with gcm.  It will prompt you for a password/phrase/pin, must be at least 8 characters.
+    1. Run `pass init gcm`
+        * This will initialize pass (password utility) to use the new gpg key you created to securely store passwords
 
 ## Usage
 Every time you start a new shell, you will need to use `startdbus` and `unlock` to get access to git repos.

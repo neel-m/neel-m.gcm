@@ -49,10 +49,28 @@
     url: "{{ gcm_repo_key_url }}"
     state: present
 
-- name: Install dot net
+- name: Check if dot net is installed from other package store
+  ansible.builtin.set_fact:
+    dot_net_remove: "{{ lookup('pipe', 'dotnet --list-sdks | grep /usr/lib', errors='ignore') }}"
+  changed_when: dot_net_remove != ""
+
+- name: Remove existing dotnet versions
+  become: true
+  ansible.builtin.apt:
+    name: "{{ gcm_dot_net_package_removes }}"
+    state: absent
+  when: dot_net_remove != ""
+
+- name: Check if dot net sdk is installed
+  ansible.builtin.set_fact:
+    dot_net: "{{ lookup('pipe', 'dotnet --list-sdks | grep 7.0', errors='ignore') }}"
+  changed_when: dot_net == ""
+
+- name: Install dot net sdk
   become: true
   ansible.builtin.apt:
     name: "{{ gcm_dot_net_package_name }}"
+  when: dot_net == ""
 
 - name: Check if git credential manager is installed
   ansible.builtin.set_fact:
@@ -63,18 +81,6 @@
   ansible.builtin.command: dotnet tool install -g git-credential-manager
   when: gcm_tool == ""
   changed_when: gcm_tool == ""
-
-# - name: Create command to start dbus
-#   ansible.builtin.template:
-#     src: ../files/startdbus
-#     dest: ~/.local/bin/startdbus
-#     mode: '0755'
-
-# - name: Create command to unlock keyring
-#   ansible.builtin.template:
-#     src: ../files/unlock
-#     dest: ~/.local/bin/unlock
-#     mode: '0755'
 
 - name: Set GCM Configuration for Azure DevOps
   community.general.git_config:
